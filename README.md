@@ -1,157 +1,215 @@
-# 🧠 Sentiment Analysis using LSTM (PyTorch)
+# Sentiment Analysis using BiLSTM + Attention
 
-## 📌 Overview
+A Deep Learning based NLP project for **Trinary Sentiment Classification** (**Positive, Neutral, Negative**) using **Bidirectional LSTM (BiLSTM)** and an **Attention Mechanism**.
 
-This project implements a **3-class sentiment analysis model** (Negative, Neutral, Positive) using an LSTM-based neural network built with PyTorch. The model is trained on real-world Twitter data and processes noisy text through a complete NLP pipeline.
-
----
-
-## 🚀 Features
-
-* Text preprocessing (cleaning, normalization)
-* Custom tokenizer and vocabulary builder
-* Sequence padding for LSTM input
-* LSTM-based deep learning model (PyTorch)
-* Multi-class classification (3 sentiments)
-* Model saving and inference-ready pipeline
+This project improves a baseline LSTM model by capturing context from both forward and backward directions while learning to focus on the most important words in a sentence.
 
 ---
 
-## 🏗️ Architecture
+## Overview
 
-```
-Raw Text
-   ↓
-Text Cleaning
-   ↓
-Tokenization (word → index)
-   ↓
-Padding (fixed length)
+Sentiment analysis is one of the fundamental tasks in Natural Language Processing (NLP), where the goal is to determine the emotional tone behind a piece of text.
+
+Traditional LSTM models rely mainly on the final hidden state, which can lead to information loss from earlier important words.
+
+This project addresses that limitation by:
+
+- Implementing a **Bidirectional LSTM** for richer contextual understanding.
+- Using an **Attention Mechanism** to dynamically assign importance to words.
+- Comparing performance against a standard LSTM baseline.
+
+---
+
+## Features
+
+- Trinary sentiment classification:
+  - Positive
+  - Neutral
+  - Negative
+- Text preprocessing pipeline
+- Tokenization and vocabulary building
+- Sequence padding
+- Baseline LSTM model
+- Improved BiLSTM + Attention model
+- Comparative model evaluation
+- Performance metrics:
+  - Accuracy
+  - Precision
+  - Recall
+  - F1-score
+
+---
+
+## Model Architecture
+
+```text
+Input Text
    ↓
 Embedding Layer
    ↓
-LSTM
+BiLSTM Layer
+   ↓
+Attention Layer
+   ↓
+Context Vector
    ↓
 Fully Connected Layer
    ↓
-Output (Negative / Neutral / Positive)
+Softmax
+   ↓
+Output (3 Classes)
 ```
 
 ---
 
-## 📂 Project Structure
+## Why BiLSTM + Attention?
 
+### BiLSTM
+
+Unlike traditional LSTM, BiLSTM processes text in both directions:
+
+- Left → Right
+- Right → Left
+
+This allows the model to understand both past and future context.
+
+Example:
+
+```text
+"The movie was not good"
 ```
-sentiment-analysis-lstm/
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── notebooks/
-│   └── exploration.ipynb
-│
-├── src/
-│   ├── preprocessing/
-│   │   ├── clean_text.py
-│   │   ├── tokenizer.py
-│   │   └── pad_sequences.py
-│   │
-│   ├── model/
-│   │   └── lstm_model.py
-│   │
-│   └── evaluation/
-│
-├── models/
-│   ├── lstm.pth
-│   ├── vocab.pkl
-│   └── config.pkl
-│
-├── outputs/
-├── requirements.txt
-└── README.md
+
+Understanding the word **not** becomes easier when future context is available.
+
+---
+
+### Attention Mechanism
+
+Attention helps the model focus on the most relevant words instead of depending only on the final hidden state.
+
+Example:
+
+```text
+"The movie was boring but the ending was amazing"
+```
+
+The attention layer can assign higher importance to:
+
+- **boring**
+- **amazing**
+
+which improves prediction quality.
+
+---
+
+## Tech Stack
+
+- Python
+- PyTorch
+- NumPy
+- Pandas
+- Scikit-learn
+- Matplotlib
+
+---
+
+## Project Structure
+
+```bash
+Sentiment-Analysis-BiLSTM-Attention/
+│── data/
+│── models/
+│── notebooks/
+│── train.py
+│── evaluate.py
+│── preprocess.py
+│── model.py
+│── requirements.txt
+│── README.md
 ```
 
 ---
 
-## 📊 Dataset
+## Installation
 
-* Twitter US Airline Sentiment Dataset
-* Contains tweets labeled as:
-
-  * Negative
-  * Neutral
-  * Positive
-
----
-
-## ⚙️ Installation
+Clone the repository:
 
 ```bash
 git clone <your-repo-link>
-cd sentiment-analysis-lstm
+cd Sentiment-Analysis-BiLSTM-Attention
+```
 
-python -m venv venv
-venv\Scripts\activate
+Install dependencies:
 
+```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-## ▶️ Usage
+## Training
 
-Run the notebook:
+Run:
 
 ```bash
-jupyter notebook
+python train.py
 ```
 
 ---
 
-## 🧪 Model Details
+## Evaluation
 
-* Embedding Size: 128
-* Hidden Size: 128
-* Output Classes: 3
-* Loss Function: CrossEntropyLoss
-* Optimizer: Adam
+Run:
 
----
+```bash
+python evaluate.py
+```
 
-## 📈 Results
+Metrics evaluated:
 
-* Achieved ~70–80% accuracy on test data
-* Strong performance on negative sentiment
-* Neutral class remains challenging due to ambiguity
-
----
-
-## 🔍 Key Learnings
-
-* Importance of preprocessing in NLP
-* Handling class imbalance
-* Sequence modeling with LSTM
-* Tokenization and padding strategies
-* Evaluation beyond accuracy
+- Accuracy
+- Precision
+- Recall
+- F1-score
 
 ---
 
-## 📦 Future Improvements
+## Results
 
-* Add attention mechanism
-* Use pre-trained embeddings (GloVe, Word2Vec)
-* Deploy using FastAPI
-* Improve neutral class classification
+| Model | Accuracy | F1 Score |
+|---|---|---|
+| LSTM | XX% | XX% |
+| BiLSTM + Attention | XX% | XX% |
 
----
-
-## 🤝 Contributing
-
-Feel free to fork and improve this project.
+> Replace with your actual results after training.
 
 ---
 
-## 📜 License
+## Future Improvements
 
-This project is for educational purposes.
+- Pretrained embeddings (Word2Vec / GloVe)
+- Transformer-based sentiment classification
+- Attention visualization
+- Real-time inference API
+- Deployment
+
+---
+
+## Learning Outcomes
+
+Through this project, I learned:
+
+- Sequence modeling using LSTM and BiLSTM
+- Attention mechanism fundamentals
+- Context-aware text classification
+- Model evaluation techniques
+- Comparative deep learning experimentation
+
+---
+
+## Author
+
+**Sumedh Charjan**
+
+GitHub: your-github-link  
+LinkedIn: your-linkedin-link
